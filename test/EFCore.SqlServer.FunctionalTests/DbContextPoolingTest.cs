@@ -410,7 +410,31 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         [ConditionalFact]
-        public void Default_Context_configuration__is_reset()
+        public void Change_tracker_can_be_cleared_without_resetting_context_config()
+        {
+            var context = new PooledContext(
+                new DbContextOptionsBuilder().UseSqlServer(
+                    SqlServerNorthwindTestStoreFactory.NorthwindConnectionString).Options);
+
+            context.ChangeTracker.AutoDetectChangesEnabled = true;
+            context.ChangeTracker.LazyLoadingEnabled = true;
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.Immediate;
+            context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.Immediate;
+            context.Database.AutoTransactionsEnabled = true;
+
+            context.ChangeTracker.Clear();
+
+            Assert.True(context.ChangeTracker.AutoDetectChangesEnabled);
+            Assert.True(context.ChangeTracker.LazyLoadingEnabled);
+            Assert.Equal(QueryTrackingBehavior.NoTracking, context.ChangeTracker.QueryTrackingBehavior);
+            Assert.Equal(CascadeTiming.Immediate, context.ChangeTracker.CascadeDeleteTiming);
+            Assert.Equal(CascadeTiming.Immediate, context.ChangeTracker.DeleteOrphansTiming);
+            Assert.True(context.Database.AutoTransactionsEnabled);
+        }
+
+        [ConditionalFact]
+        public void Default_Context_configuration_is_reset()
         {
             var serviceProvider = BuildServiceProvider<DefaultOptionsPooledContext>();
 
