@@ -31,7 +31,7 @@
     <XUnitProject Remove="$(RepoRoot)/test/EFCore.Relational.Specification.Tests/*.csproj"/>
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(XUnitProject.Contains(`CrossStore.FunctionalTests`))'">
+  <PropertyGroup Condition="'$(XUnitProject.Contains(`CrossStore`))'">
     <HelixPreCommands Condition = "'$(HelixTargetQueue.StartsWith(`Windows`))' AND '$(XUnitProject.Contains(`CrossStore.FunctionalTests`))'">$(HelixPreCommands); SqlLocalDB start</HelixPreCommands>
     <XUnitPublishTargetFramework>netcoreapp5.0</XUnitPublishTargetFramework>
     <XUnitRuntimeTargetFramework>netcoreapp2.0</XUnitRuntimeTargetFramework>
