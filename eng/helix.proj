@@ -31,8 +31,8 @@
     <XUnitProject Remove="$(RepoRoot)/test/EFCore.Relational.Specification.Tests/*.csproj"/>
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(XUnitProject.Identity.Contains(`CrossStore`))'">
-    <HelixPreCommands Condition = "'$(HelixTargetQueue.StartsWith(`Windows`))' AND '$(XUnitProject.Identity.Contains(`CrossStore.FunctionalTests`))'">$(HelixPreCommands); SqlLocalDB start</HelixPreCommands>
+  <PropertyGroup Condition="'$(HelixWorkItem.Identity.Contains(`CrossStore`))'">
+    <HelixPreCommands Condition = "'$(HelixTargetQueue.StartsWith(`Windows`))' AND '$(HelixWorkItem.Identity.Contains(`CrossStore.FunctionalTests`))'">$(HelixPreCommands); SqlLocalDB start</HelixPreCommands>
     <XUnitPublishTargetFramework>netcoreapp5.0</XUnitPublishTargetFramework>
     <XUnitRuntimeTargetFramework>netcoreapp2.0</XUnitRuntimeTargetFramework>
     <XUnitRunnerVersion>2.4.1</XUnitRunnerVersion>
